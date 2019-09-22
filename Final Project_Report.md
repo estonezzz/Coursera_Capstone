@@ -12,11 +12,6 @@ Housing costs are impacting individuals, families, businesses, and governments w
 The goal of this project to build a predictive model for the housing prices based on the available information for King County, Washington. The impact of  geographical location through proximity to various venues to be analyzed, and the question whether the predictive outcome of the model could be improved to  be assessed. 
 
 
-
-```python
-
-```
-
 ## 2. Data acquisition and cleaning
 
 ### 2.1. Data sources
@@ -36,8 +31,9 @@ Also, due to daily limitations on Foursquare API requests only about 700 records
 
 ### 2.3. Feature selection
 
-After data cleaning, there were 698 entries with price information and 18 additional numerical features in the dataset. Upon examining the meaning of each feature,   it became clear that there was some redundancy in the features. For example, sqft_living was simply a total of sqft_above and sqft_basement. Surprisingly out of all the venues, only Outdoors & Recreations (a broad category which includes gyms, parks, etc) indicated any significant correlation (~ 0.22) with home prices. All other  categories indicated correlation of less than 0.10. 
-![corr_matrix.PNG](attachment:corr_matrix.PNG)
+After data cleaning, there were 698 entries with price information and 18 additional numerical features in the dataset. Upon examining the meaning of each feature,   it became clear that there was some redundancy in the features. For example, sqft_living was simply a total of sqft_above and sqft_basement. Surprisingly out of all the venues, only Outdoors & Recreations (a broad category which includes gyms, parks, etc) indicated any significant correlation (~ 0.22) with home prices. All other  categories indicated correlation of less than 0.10.
+
+![Correlation Matrix][corr_matrix]
    
 
 ## 3. Methodology
@@ -61,22 +57,23 @@ In this project, linear regression models using these feature sets were built an
 The success of the linear regression models depends on the amount of correlation between the predicting values and the features.
  
 The scatter plot below explores the correlation between the home price and number of bedrooms and bathrooms. 
-![Home%20Price_vs_bed_bath.PNG](attachment:Home%20Price_vs_bed_bath.PNG)
+
+![Bed&bath][bed&bath]
 
 While the correlation between the number of bedrooms/bathrooms and the home price is expected (the more the higher price is), these <br> seem to be poor predictors of the price just on their own: the price varies significantly within any number of bedrooms/bathrooms.
 
 The scatter plots below explore the correlation between the home price and the house living area and property lot size.
 
 
-![Home%20Price_vs_living.PNG](attachment:Home%20Price_vs_living.PNG)
+![][living_area]
 
-![Home%20Price_vs_lot.PNG](attachment:Home%20Price_vs_lot.PNG)
+![][lot_size]
 
 Clearly and not surprisingly, there is a significant amount of correlation between living area and home price, but almost none between home price and lot size. 
 
 The scatter plot below explores the correlation between the home prices and the the number of nearby venues of different types. 
 
-![Home%20Price_vs_venues.PNG](attachment:Home%20Price_vs_venues.PNG)
+![][venues]
 
 The correlations between the number of venues and the home price are less obvious. However, upon a close inspection, one can notice some correlations  between the price and number of Outdoors & Recreation facilities.
 
@@ -84,16 +81,16 @@ The correlations between the number of venues and the home price are less obviou
 
 The performance of all models was evaluated by computing Residual Mean Squared (RMS) and R^2 scores using k-fold splitting of the initial dataset into training  and testing subsets, and running over 100 splitting realizations to get the accurate estimations.
 
-![RMS_Score.PNG](attachment:RMS_Score.PNG)
+![][RMS_Score]
 
-![RMS_Score_table.PNG](attachment:RMS_Score_table.PNG)
+![][RMS_Score_table]
 
 It is obvious that RMS score is reduced for the models that include venue features.
 
-![R2_Score.PNG](attachment:R2_Score.PNG)
+![][R2_Score]
 
 
-![R2_Score_table.PNG](attachment:R2_Score_table.PNG)
+![][R2_Score_table]
 
 
 First of all, it important to note that exclusion of poorly correlated features (from All Stats to Selected Stats) leads to significant reduction of model performance.
@@ -104,8 +101,8 @@ Thus, inspection of the RMS and R^2 scores confirms that removing redundant or h
 
 The distribution plots of the actual and predicted prices give further insights into the performance of the best model.
 
-![Distrib_train.PNG](attachment:Distrib_train.PNG) <br>
-![Distrib_test.PNG](attachment:Distrib_test.PNG)
+![][Distrib_train]
+![][Distrib_test]
 
 We can see that there are price regions, especially on the mid-range side, around $500,000 USD, that can benefit from further model improvements.
 
@@ -115,7 +112,7 @@ From the model performance evaluations, it is clear that including the nearby ve
 
 For further insights into the best performing model, we can look into the model linear regression coefficients.
 
-![result.PNG](attachment:result.PNG)
+![][results]
 
 The meaning behind these coefficients is the added price value associated with each unit of the specific feature. We can see that not all features contribute equally,  even when they share the same measurement unit. More importantly, it appears that living area square footage and house grade are the most important price predictors.  The lot size and house condition are far less important predictors. And finally, homes that have more outdoors options nearby tend to be more expensive. The number of  dinning options may also drive the expected home price but the effect is less significant when it is compared to the contribution from the outdoors options.
 
@@ -140,7 +137,18 @@ The regression model presented here can be improved further. Obviously, it might
 3. [Google Search](http://google.com)
 4. [Foursquare API](https://foursquare.com/developers)
 
-
+[corr_matrix]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/corr_matrix.PNG "Correlation Matrix"
+[bed&bath]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/Home%20Price_vs_bed_bath.PNG
+[living_area]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/Home%20Price_vs_living.PNG
+[lot_size]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/Home%20Price_vs_lot.PNG
+[venues]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/Home%20Price_vs_venues.PNG
+[RMS_Score]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/RMS_Score.PNG
+[RMS_Score_table]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/RMS_Score_table.PNG
+[R2_Score]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/R2_Score.PNG
+[R2_Score_table]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/R2_Score_table.PNG
+[Distrib_train]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/Distrib_train.PNG
+[Distrib_test]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/Distrib_test.PNG
+[results]: https://github.com/estonezzz/Coursera_Capstone/blob/master/report%20pictures/result.PNG
 
 ```python
 
